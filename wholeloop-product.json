@@ -1,0 +1,5 @@
+{
+  "product_name": "ForVzla",
+  "artifact_prefix": "FOR",
+  "spec_id_pattern": "ARTIFACT-FOR-{NNN}"
+}
