@@ -1,0 +1,119 @@
+schema_version: "1.0"
+id: carnet-voluntaria
+title: Carnet de Voluntaria (volunteer ID card generation)
+created: 2026-07-10
+created_by: "Cursor Agent (brainstorm-feature v1)"
+status: spec-written
+spec_file: Features/carnet-voluntaria/ARTIFACT-FOR-001.md
+
+evidence:
+  signal_count: 1
+  icp_weighted_count: 0.5
+  confidence: low
+  confidence_reason: >
+    Sole evidence is one internal team WhatsApp exchange (Anyelisa taveras and
+    Dari, 2026-07-10) not yet processed via synthesize-meeting, plus a sample
+    carnet PDF (Ashly Monjes) and the Cuidadoras Caracas Canva template link.
+    Context/icp-profiles.md is an empty stub, so this signal cannot be
+    formally weighted against ICP1/ICP2 yet. No direct volunteer/customer
+    interview confirms the pain — team-observed only (one volunteer needed a
+    carnet urgently and didn't have one).
+  primary_icp_validated: false
+  supporting_interviews:
+    - id: "conversacion-carnet-grupo-cuidadoras-caracas-2026-07-10"
+      icp_match: team
+      weight: 0.5
+      summary: >
+        Dari asks if volunteers can get their carnet via the web for a girl
+        who needs one urgently. Anyelisa is building it, needs a source for
+        the photo, proposes adding a photo field to registration and to the
+        portal for existing volunteers, references the Canva template link,
+        and asks about print dimensions (unanswered in the thread).
+
+jtbd:
+  primary: >
+    A registered volunteer generates a printable ID card with her photo so
+    she can prove her affiliation with the group in the field.
+  secondary: []
+
+icp:
+  primary_segment: "Volunteers (individual member, self-service)"
+  secondary_segments: []
+  excluded_segments:
+    - "Moderators/admins generating carnets on behalf of volunteers"
+  icp_match_required: any
+
+in_scope:
+  - "Optional photo upload field added to voluntarios-registro (registration form)"
+  - "Photo upload/edit available post-registration in the member dashboard/portal, for volunteers already registered without a photo"
+  - "\"Generate carnet\" action in the member dashboard, async (queue -> poll/notify -> download)"
+  - "Carnet rendering is config-driven per group (group_id -> template config/assets), natively rebuilt (not Canva API); Cuidadoras Caracas is the one live template at launch"
+  - "Output is a print-ready PDF/PNG at correct physical ID-card dimensions, with foto, nombre, apellido, cedula"
+
+out_of_scope:
+  - "Moderator/admin bulk-generation of carnets on behalf of volunteers — deferred: no admin surface requested yet"
+  - "Physical printing/fulfillment/mailing of cards — deferred: digital output only is in scope, fulfillment is out of product scope"
+  - "Canva Connect API / live sync back into Canva — deferred: rejected in favor of a natively rebuilt template, since Autofill/Bulk Create requires Canva Enterprise and a runtime dependency on Canva's domain"
+  - "QR code / scannable verification on the carnet — deferred: not mentioned in evidence, nice-to-have"
+  - "Self-serve template editor/designer UI for PMs to author new group templates — deferred: adding template #2 is a manual dev task for now, not a product feature yet"
+
+success:
+  user_outcome: >
+    A volunteer who has uploaded a photo can generate and download a
+    print-ready carnet from her dashboard within seconds, without asking a
+    moderator for help.
+  mvp_boundary: >
+    Optional registration photo field + post-registration photo edit +
+    single live template (Cuidadoras Caracas) rendered via a config-driven
+    per-group system + async generate-and-download flow.
+
+constraints:
+  depends_on: []
+  blocks: []
+  related_capabilities:
+    - voluntarios-registro
+    - grupos-voluntarios-entidad
+  new_capabilities_needed:
+    - voluntarios-foto-perfil
+    - carnet-generacion
+
+validation_gates:
+  - id: VG1
+    question: "Does this duplicate the pending 'edición de voluntarias' UI in spec-cuidadoras-coordinacion-ui.md?"
+    method: internal-review
+    icp_required: null
+    owner: PM
+    status: answered
+    answer: >
+      Confirmed by PM — no duplication with the pending "edición de
+      voluntarias" UI spec; the two efforts are separate and compatible.
+  - id: VG2
+    question: "What physical dimensions should the carnet be for print purposes?"
+    method: internal-review
+    icp_required: null
+    owner: PM
+    status: answered
+    answer: >
+      Use the dimensions from the reference PDF (attached: "asly monjes .pdf",
+      matching the Canva template) as the print spec. The source PDF/Canva
+      export should be saved to Context/source-docs/ so build-spec can read
+      the exact mm/px values directly rather than re-deriving them.
+  - id: VG3
+    question: "Does self-service carnet generation solve real volunteer pain, confirmed by a direct volunteer/ICP signal rather than team-observed only?"
+    method: customer-interview
+    icp_required: any
+    owner: PM
+    status: answered
+    answer: >
+      Confirmed by PM — the WhatsApp thread itself is a direct request: Dari
+      asked on behalf of a specific volunteer who needed a carnet urgently
+      and didn't have one. Treated as a real, direct volunteer-originated
+      signal, not team-invented.
+
+open_questions:
+  - "Exact photo requirements (min resolution, aspect ratio, moderation/content check) not yet defined."
+  - "What happens to a volunteer's existing carnet if she re-uploads a new photo — regenerate automatically or require a new manual 'Generate carnet' action?"
+
+editorial_notes:
+  - "Save the attached PDF (asly monjes .pdf) and Canva template link (https://canva.link/03vyok16l02lf14) into Context/source-docs/ for build-spec to reference."
+  - "Consider running synthesize-meeting on the Anyelisa/Dari WhatsApp thread to formally register this as a team signal in master.yaml."

@@ -8,9 +8,21 @@ counts:
   themes_total: 0
   surveys_processed: 0
   survey_respondents_total: 0
-  feature_candidates_total: 0
+  feature_candidates_total: 1
 
 survey_themes: []
 interviews: []
 themes: []
-feature_candidates: []
+feature_candidates:
+  - id: carnet-voluntaria
+    slug: carnet-voluntaria
+    title: Carnet de Voluntaria (volunteer ID card generation)
+    origin: team
+    signal_count: 1
+    icp_weighted_count: 0.5
+    last_signal_date: 2026-07-10
+    supporting_interviews:
+      - conversacion-carnet-grupo-cuidadoras-caracas-2026-07-10
+    status: scoped
+    brief_file: Features/carnet-voluntaria/scope.yaml
+    validation_gaps: []
