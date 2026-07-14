@@ -2,9 +2,9 @@
 
 > Hand-edited. What the product can do today (links to repos/services).
 
-<!-- agent-managed — populated 2026-07-10 from {{APP_REPO}} (forvzla-app) state: supabase/migrations/, public/, docs/. PM: review, correct wording/slugs, then mark ✎ HAND-EDITED once confirmed. Re-run capability-inventor-style pass after each Progress/ delivery to keep this current. -->
+<!-- agent-managed — populated 2026-07-10 from ForVzla (ForVzla) state: supabase/migrations/, public/, docs/. PM: review, correct wording/slugs, then mark ✎ HAND-EDITED once confirmed. Re-run capability-inventor-style pass after each Progress/ delivery to keep this current. -->
 
-Single repo today: **{{APP_REPO}}** (forvzla-app) — static PWA + Supabase, no separate backend service except the ingestion scraper.
+Single repo today: **ForVzla** (ForVzla) — static PWA + Supabase, no separate backend service except the ingestion scraper.
 
 ## SOS map (emergency core)
 
@@ -57,7 +57,10 @@ Single repo today: **{{APP_REPO}}** (forvzla-app) — static PWA + Supabase, no 
 | `sitios-catalogo` | Reusable site/location catalog per group | `sitios` table | |
 | `inventario-checklist` | Reusable inventory-item catalog + per-jornada material checklist | `items_inventario`, `necesidades_jornada` tables | |
 | `moderadoras-por-grupo` | Per-group moderator roles, invite flow, RLS-scoped | `moderadores_grupo` table | |
-| `jornada-media` | Photo/video log per jornada | `jornada_media` table | |
+| `jornada-media` | Photo/video log per jornada (coordinadoras upload; voluntarias read via RPC) | `jornada_media` table, `jornada-media.js` | |
+| `jornada-media-voluntario-lectura` | Volunteers view jornada galleries (thumbs, grid, lightbox) with signed URLs | `media_jornada_voluntario`, `resumen_media_jornadas_voluntario` RPCs | ARTIFACT-FOR-002, jul-2026 |
+| `voluntarios-foto-perfil` | Volunteer profile photo for carnet (private bucket + RPC) | `voluntario-fotos`, `carnet.js` | ARTIFACT-FOR-001 |
+| `carnet-generacion` | Async PDF carnet generation per group template | `carnet_generaciones`, Edge Function `render-carnet` | ARTIFACT-FOR-001, Cuidadoras Caracas |
 
 ## Transparency & contributions
 
@@ -78,7 +81,7 @@ Single repo today: **{{APP_REPO}}** (forvzla-app) — static PWA + Supabase, no 
 
 - `public/mockup-home-evolucion.html`
 - `public/mockup-forvzla-guau.html`
-- Larger Cuidadoras Caracas UI described in `forvzla-app/docs/spec-cuidadoras-coordinacion-ui.md` (landing, panel moderadoras, edición de voluntarias, RSVP) — still pending, track in `Roadmap/`, not here.
+- Larger Cuidadoras Caracas UI described in `ForVzla/docs/spec-cuidadoras-coordinacion-ui.md` (landing, panel moderadoras, edición de voluntarias, RSVP) — still pending, track in `Roadmap/`, not here.
 
 ## Open questions for PM
 

@@ -106,3 +106,34 @@ editorial_notes:
   - "Mockup interactivo en ForVzla: public/mockup-voluntaria-galerias-jornadas.html"
   - "Design notes: ForVzla/workspace/runs/galerias-jornadas-voluntarias/design-notes.md"
   - "Implementación iniciada en conversación 2026-07-14 antes de merge."
+
+delivery_notes:
+  delivered_date: 2026-07-14
+  release_strategy: epic
+  run_key: galerias-jornadas-voluntarias
+  artifact_ref: ARTIFACT-FOR-002
+  epic_ref: ARTIFACT-FOR-002
+  story_keys:
+    - jornada-media-backend
+    - jornada-media-ui
+  pr_url: https://github.com/anyelisataveras/ForVzla/commit/9fc4ad81a6b8a140ccc9a7a3863406ec77f74561
+  implemented_in_scope:
+    - Miniaturas y badge en listado Mi cuenta / Jornadas (cualquier tab con media)
+    - CTA Ver galería cuando hay fotos
+    - Sección Recuerdos de la jornada en jornada.html
+    - Visor fullscreen lightbox
+    - RPC lectura voluntaria + read tokens storage
+    - Empty states próxima sin fotos / realizada sin media
+  deviations:
+    - Thumbs visibles en Próximas/Pasadas/Todas si hay media (spec AC original decía ocultar en Próximas; PM cambió en build)
+  deferred:
+    - Feed Recuerdos recientes horizontal
+    - Subida por voluntarias
+    - Galería anónima
+    - Compartir nativo en visor
+    - Badge Nuevas últimos 7 días
+    - QA manual checklist formal
+  new_capabilities_created:
+    - jornada-media-voluntario-lectura
+  release_note_file: Progress/adwf-handoffs/2026-07-14-galerias-jornadas-voluntarias.md
+  handoff_notes: "Migraciones 20250714120000 + 20250714153000 aplicadas en Supabase. Ship vía push master 9fc4ad8."

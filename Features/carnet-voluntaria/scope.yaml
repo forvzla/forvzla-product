@@ -94,10 +94,12 @@ validation_gates:
     owner: PM
     status: answered
     answer: >
-      Use the dimensions from the reference PDF (attached: "asly monjes .pdf",
-      matching the Canva template) as the print spec. The source PDF/Canva
-      export should be saved to Context/source-docs/ so build-spec can read
-      the exact mm/px values directly rather than re-deriving them.
+      Authoritative print spec: Canva template Cuidadoras Caracas
+      (https://canva.link/03vyok16l02lf14). PM confirmed 2026-07-12 that
+      this template has the correct dimensions. Native HTML/PDF rebuild must
+      match that size and layout — no Canva API at runtime. Builder may
+      export once from Canva to read exact mm/px for carnet_plantillas.config.
+      Sample PDF (Ashly Monjes) is supplementary for field placement reference.
   - id: VG3
     question: "Does self-service carnet generation solve real volunteer pain, confirmed by a direct volunteer/ICP signal rather than team-observed only?"
     method: customer-interview
@@ -110,10 +112,69 @@ validation_gates:
       and didn't have one. Treated as a real, direct volunteer-originated
       signal, not team-invented.
 
-open_questions:
-  - "Exact photo requirements (min resolution, aspect ratio, moderation/content check) not yet defined."
-  - "What happens to a volunteer's existing carnet if she re-uploads a new photo — regenerate automatically or require a new manual 'Generate carnet' action?"
+open_questions: []
+
+open_questions_resolved:
+  - id: OQ1
+    question: "Exact photo requirements (min resolution, aspect ratio, moderation/content check)"
+    resolved: 2026-07-12
+    answer: >
+      MVP defaults — portrait 3:4 crop in UI; min 480px on short side; max 5MB;
+      JPEG, PNG, WebP, HEIC/HEIF; no automated content moderation at launch;
+      UI hint: foto de rostro, fondo claro, sin filtros.
+  - id: OQ2
+    question: "Re-upload photo vs regenerate carnet"
+    resolved: 2026-07-12
+    answer: >
+      No standalone photo edit in Mi cuenta. Volunteer uses Generar carnet
+      (first time) or Regenerar carnet (when one exists); that flow requires
+      uploading a (new) photo, queues generation, and replaces the previous
+      downloadable carnet when the job completes. Optional photo at registration
+      unchanged — volunteers without photo can upload via Generar carnet later.
+
+delivery_notes:
+  delivered_date: 2026-07-14
+  release_strategy: epic
+  run_key: ARTIFACT-FOR-001
+  artifact_ref: ARTIFACT-FOR-001
+  epic_ref: ARTIFACT-FOR-001
+  story_keys:
+    - carnet-foto-storage
+    - carnet-plantilla-jobs
+    - carnet-render-worker
+    - carnet-ui-registro
+    - carnet-ui-mi-cuenta
+  pr_url: https://github.com/anyelisataveras/ForVzla/pull/1
+  post_merge_commits:
+    - "8114d60 fix(carnet): mobile photo picker and remove PDF embed preview"
+    - "043fffb fix(carnet): lower PDF text fields below logo area"
+    - "2b1a27e fix(carnet): render PDF preview with pdf.js on canvas"
+    - "468d7d8 feat(carnet): manual photo crop and fix Cuidadoras routing"
+  implemented_in_scope:
+    - Optional photo at voluntarios-registro
+    - Generate carnet async in member portal
+    - Config-driven per-group template (Cuidadoras Caracas)
+    - Print-ready PDF 7×5 in with foto and identity fields
+    - Coordinator custom background PNG upload
+    - Manual 3:4 photo crop editor (preview + FAB, registro + carnet)
+    - pdf.js carnet preview on ready screen
+  deviations:
+    - Post-registration photo edit only inside Generar/Regenerar carnet flow (not standalone dashboard section)
+    - PDF shows nombre completo + cédula + Nº voluntaria (not separate nombre/apellido lines)
+    - No programmatic icons — Canva PNG carries graphic design
+    - Manual crop add-on shipped post-epic-merge (PM request)
+  deferred:
+    - Manual QA sign-off (see 2026-07-13-ARTIFACT-FOR-001-qa-manual.md)
+    - Layout fine-tune vs coordinator PNG
+    - Automated UI/integration tests
+    - Self-serve template editor for PM (out of scope)
+    - Photo rotate in crop editor (out of add-on MVP)
+  new_capabilities_created:
+    - voluntarios-foto-perfil
+    - carnet-generacion
+  release_note_file: Progress/adwf-handoffs/2026-07-14-ARTIFACT-FOR-001.md
+  handoff_notes: "Epic merged PR #1 on 2026-07-13. Handoff closed 2026-07-14 with post-merge carnet fixes and manual crop add-on."
 
 editorial_notes:
-  - "Save the attached PDF (asly monjes .pdf) and Canva template link (https://canva.link/03vyok16l02lf14) into Context/source-docs/ for build-spec to reference."
+  - "Print dimensions: Canva template https://canva.link/03vyok16l02lf14 is authoritative (PM 2026-07-12). Optional: export PNG/PDF from Canva into Context/source-docs/ for builder mm/px readout."
   - "Consider running synthesize-meeting on the Anyelisa/Dari WhatsApp thread to formally register this as a team signal in master.yaml."
