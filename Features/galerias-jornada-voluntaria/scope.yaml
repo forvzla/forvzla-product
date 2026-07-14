@@ -1,0 +1,108 @@
+schema_version: "1.0"
+id: galerias-jornada-voluntaria
+title: Galerías de jornadas para voluntarias
+created: 2026-07-14
+created_by: "PM + Cursor Agent"
+status: spec-written
+spec_file: Features/galerias-jornada-voluntaria/ARTIFACT-FOR-002.md
+
+evidence:
+  signal_count: 1
+  icp_weighted_count: 0.5
+  confidence: medium
+  confidence_reason: >
+    Confirmación directa de coordinadoras del piloto Cuidadoras Caracas (jul 2026):
+    las voluntarias deben ver las fotos y videos que el equipo sube al cerrar cada
+    jornada. Complementa jornada-media existente (solo panel coordinadoras hasta ahora).
+  primary_icp_validated: false
+  supporting_interviews:
+    - id: "confirmacion-coordinadoras-galerias-jul-2026"
+      icp_match: team
+      weight: 0.5
+      summary: >
+        Coordinadoras confirman que voluntarias deberían ver las galerías de las
+        jornadas en su dashboard, no solo el equipo en el panel de coordinación.
+
+jtbd:
+  primary: >
+    Una voluntaria que participó en una jornada puede ver los recuerdos (fotos y
+    videos) que el equipo documentó, sin pedirlas por WhatsApp.
+  secondary: []
+
+icp:
+  primary_segment: "Volunteers (individual member, self-service)"
+  secondary_segments:
+    - "Coordinadoras (indirect — ya suben media; this unlocks volunteer visibility)"
+  excluded_segments: []
+  icp_match_required: any
+
+in_scope:
+  - "Miniaturas y badge de conteo (📷 N) en cards de jornadas pasadas en Mi cuenta y listado Jornadas"
+  - "CTA «Ver galería →» cuando la jornada tiene media; «Ver resumen →» si no"
+  - "Sección «Recuerdos de la jornada» en detalle de jornada (grid 3×N, fotos y videos)"
+  - "Visor fullscreen (lightbox) con navegación y contador"
+  - "RPC + read tokens para voluntarias autenticadas (solo lectura; bucket jornada-media privado)"
+  - "Empty states: jornada próxima sin fotos; jornada realizada sin media aún"
+
+out_of_scope:
+  - "Subida de fotos o videos por voluntarias — deferred: solo coordinadoras suben hoy"
+  - "Feed horizontal «Recuerdos recientes» en dashboard — deferred: alternativa en mockup; MVP usa thumbs en cards"
+  - "Galería visible sin login (anon) — deferred: espacio privado del grupo"
+  - "Compartir nativo / descarga explícita desde visor — deferred: long-press nativo en móvil suficiente para MVP"
+  - "Badge «Nuevas» por fotos recientes — deferred: UX open en mockup"
+
+success:
+  user_outcome: >
+    Una voluntaria entra a Mi cuenta, ve en jornadas pasadas si hay fotos, abre la
+    galería completa y recorre los recuerdos de la jornada en el móvil.
+  mvp_boundary: >
+    Lectura de jornada_media existente vía RPC con credenciales de voluntaria +
+  thumbs en listado + galería y lightbox en jornada.html (piloto Cuidadoras Caracas).
+
+constraints:
+  depends_on:
+    - jornada-media
+    - tareas-inscripciones
+  blocks: []
+  related_capabilities:
+    - jornadas-eventos
+    - jornada-media
+    - voluntarios-registro
+  new_capabilities_needed:
+    - jornada-media-voluntario-lectura
+
+validation_gates:
+  - id: VG1
+    question: "¿Las voluntarias pueden subir fotos o solo ver las de coordinadoras?"
+    method: internal-review
+    icp_required: null
+    owner: PM
+    status: answered
+    answer: >
+      Solo lectura. Coordinadoras suben al cerrar la jornada (flujo existente en coord).
+      Voluntarias no suben en este MVP.
+  - id: VG2
+    question: "¿Galería visible en jornadas próximas o solo pasadas/realizadas?"
+    method: internal-review
+    icp_required: null
+    owner: PM
+    status: answered
+    answer: >
+      Miniaturas y badge en cualquier tab (Próximas, Pasadas, Todas) siempre que
+      la jornada tenga media subida — sin filtrar por fecha ni estado.
+  - id: VG3
+    question: "¿Quién puede ver las fotos — cualquier visitante o solo voluntaria autenticada?"
+    method: internal-review
+    icp_required: null
+    owner: PM
+    status: answered
+    answer: >
+      Solo voluntaria autenticada del grupo (credenciales ligeras + _voluntario_cred_ok).
+      Visitante anónimo en jornada.html no ve galería.
+
+open_questions: []
+
+editorial_notes:
+  - "Mockup interactivo en ForVzla: public/mockup-voluntaria-galerias-jornadas.html"
+  - "Design notes: ForVzla/workspace/runs/galerias-jornadas-voluntarias/design-notes.md"
+  - "Implementación iniciada en conversación 2026-07-14 antes de merge."
